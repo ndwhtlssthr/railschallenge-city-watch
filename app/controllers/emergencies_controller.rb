@@ -21,10 +21,21 @@ class EmergenciesController < ApplicationController
     end
   end
 
+  def update
+    @emergency = Emergency.find_by(code: params[:id])
+    @emergency.update_attributes(emergency_update_params)
+    render json: @emergency, status: 201
+  end
+
   private
 
   def emergency_create_params
     params.require(:emergency)
       .permit(:code, :fire_severity, :police_severity, :medical_severity)
+  end
+
+  def emergency_update_params
+    params.require(:emergency)
+      .permit(:fire_severity, :police_severity, :medical_severity, :resolved_at)
   end
 end
