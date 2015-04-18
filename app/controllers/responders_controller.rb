@@ -37,9 +37,4 @@ class RespondersController < ApplicationController
     params.require(:responder).permit(:on_duty)
   end
 
-  rescue_from(ActionController::UnpermittedParameters) do |pme|
-    render json: {
-      message: "found unpermitted parameter: #{ pme.params.first }"
-    }, status: 422
-  end
 end
