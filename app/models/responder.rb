@@ -23,4 +23,9 @@ class Responder < ActiveRecord::Base
     where(type: type).where(emergency_id: nil).where(on_duty: true)
       .sum(:capacity)
   end
+
+  def self.available_units(type)
+    where(type: type).where(emergency_id: nil).where(on_duty: true)
+      .order(capacity: :desc)
+  end
 end

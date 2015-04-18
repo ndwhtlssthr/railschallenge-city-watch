@@ -8,6 +8,14 @@ class Emergency < ActiveRecord::Base
   has_many :responders
 
   def self.full_response_count
-    1
+    where(full_response: true).count
+  end
+
+  def total_response_need
+    fire_severity + police_severity + medical_severity
+  end
+
+  def total_response
+    responders.sum(:capacity)
   end
 end
