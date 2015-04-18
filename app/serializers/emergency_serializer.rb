@@ -1,3 +1,4 @@
 class EmergencySerializer < ActiveModel::Serializer
-  attributes :code, :fire_severity, :police_severity, :medical_severity
+  attributes :code, :fire_severity, :police_severity, :medical_severity,
+             :resolved_at
 end
