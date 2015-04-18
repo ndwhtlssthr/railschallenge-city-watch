@@ -3,6 +3,15 @@ class RespondersController < ApplicationController
     render json: Responder.all
   end
 
+  def show
+    @responder = Responder.find_by(name: params[:id])
+    if @responder
+      render json: @responder, status: 201
+    else
+      head 404
+    end
+  end
+
   def create
     @responder = Responder.new(responder_params)
     if @responder.save
