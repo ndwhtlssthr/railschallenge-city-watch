@@ -3,6 +3,15 @@ class EmergenciesController < ApplicationController
     render json: Emergency.all
   end
 
+  def show
+    @emergency = Emergency.find_by(code: params[:id])
+    if @emergency
+      render json: @emergency, status: 201
+    else
+      render_not_found
+    end
+  end
+
   def create
     @emergency = Emergency.new(emergency_create_params)
     if @emergency.save
