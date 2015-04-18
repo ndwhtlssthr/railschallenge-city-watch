@@ -13,7 +13,7 @@ class RespondersController < ApplicationController
   end
 
   def create
-    @responder = Responder.new(responder_params)
+    @responder = Responder.new(responder_create_params)
     if @responder.save
       render json: @responder, status: 201
     else
@@ -21,10 +21,20 @@ class RespondersController < ApplicationController
     end
   end
 
+  def update
+    @responder = Responder.find_by(name: params[:id])
+    @responder.update_attributes(responder_update_params)
+    render json: @responder, status: 201
+  end
+
   private
 
-  def responder_params
+  def responder_create_params
     params.require(:responder).permit(:type, :name, :capacity)
+  end
+
+  def responder_update_params
+    params.require(:responder).permit(:on_duty)
   end
 
   rescue_from(ActionController::UnpermittedParameters) do |pme|
