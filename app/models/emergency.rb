@@ -5,6 +5,8 @@ class Emergency < ActiveRecord::Base
             numericality: { greater_than_or_equal_to: 0 }
   validates :code, uniqueness: true
 
+  has_many :responders
+
   def self.full_response_count
     1
   end

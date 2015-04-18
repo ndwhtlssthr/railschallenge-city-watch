@@ -17,6 +17,7 @@ class EmergenciesController < ApplicationController
   def create
     @emergency = Emergency.new(emergency_create_params)
     if @emergency.save
+      Dispatcher.dispatch_units(@emergency)
       render json: @emergency, status: 201
     else
       render json: { message: @emergency.errors.messages }, status: 422
