@@ -8,7 +8,7 @@ class RespondersController < ApplicationController
     if @responder
       render json: @responder, status: 201
     else
-      head 404
+      render_not_found
     end
   end
 
