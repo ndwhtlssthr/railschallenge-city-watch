@@ -1,4 +1,8 @@
 class EmergenciesController < ApplicationController
+  def index
+    render json: Emergency.all
+  end
+
   def create
     @emergency = Emergency.new(emergency_create_params)
     if @emergency.save
