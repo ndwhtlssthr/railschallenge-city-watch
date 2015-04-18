@@ -3,8 +3,5 @@ class Responder < ActiveRecord::Base
 
   validates :name, uniqueness: true
   validates :capacity, :name, presence: true
-  validates :capacity, inclusion: {
-    in: 1..5,
-    message: 'is not included in the list'
-  }
+  validates :capacity, inclusion: { in: 1..5 }
 end
