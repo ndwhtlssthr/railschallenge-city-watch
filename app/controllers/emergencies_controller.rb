@@ -4,7 +4,7 @@ class EmergenciesController < ApplicationController
     if @emergency.save
       render json: @emergency, status: 201
     else
-      render "error"
+      render 'error'
     end
   end
 
