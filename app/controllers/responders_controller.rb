@@ -36,5 +36,4 @@ class RespondersController < ApplicationController
   def responder_update_params
     params.require(:responder).permit(:on_duty)
   end
-
 end
