@@ -6,23 +6,19 @@ class Dispatcher
   end
 
   def dispatch_units
-    select_force_units
+    force_branches.each do |type, type_severity|
+      select_units(type, type_severity)
+    end
     mark_full_response if full_response?
   end
 
   def resolve_emergency
     emergency.responders.each do |responder|
-      responder.update_attribute(:emergency_id, nil)
+      unassign(responder)
     end
   end
 
   private
-
-  def select_force_units
-    force_responsibilities.each do |type, type_severity|
-      select_units(type, type_severity)
-    end
-  end
 
   def select_units(type, type_severity)
     severity = emergency.send(type_severity)
@@ -63,7 +59,11 @@ class Dispatcher
     unit.update_attribute(:emergency_id, emergency.id)
   end
 
-  def force_responsibilities
+  def unassign(unit)
+    unit.update_attribute(:emergency_id, nil)
+  end
+
+  def force_branches
     {
       'Fire'    => :fire_severity,
       'Police'  => :police_severity,
