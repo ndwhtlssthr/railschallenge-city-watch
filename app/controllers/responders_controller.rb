@@ -1,4 +1,8 @@
 class RespondersController < ApplicationController
+  def index
+    render json: Responder.all
+  end
+
   def create
     @responder = Responder.new(responder_params)
     if @responder.save
