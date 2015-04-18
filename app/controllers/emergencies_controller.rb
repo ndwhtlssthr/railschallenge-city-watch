@@ -2,8 +2,7 @@ class EmergenciesController < ApplicationController
   def index
     render json: Emergency.all,
            meta: [Emergency.full_response_count, Emergency.count],
-           meta_key: 'full_responses',
-           status: 201
+           meta_key: 'full_responses'
   end
 
   def show
