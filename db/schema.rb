@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418160631) do
+ActiveRecord::Schema.define(version: 20150418180345) do
 
   create_table "emergencies", force: :cascade do |t|
     t.datetime "resolved_at"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150418160631) do
     t.integer  "fire_severity"
     t.integer  "police_severity"
     t.integer  "medical_severity"
+    t.boolean  "full_response",    default: false
   end
 
   create_table "responders", force: :cascade do |t|
@@ -27,7 +28,7 @@ ActiveRecord::Schema.define(version: 20150418160631) do
     t.string  "name"
     t.integer "capacity"
     t.boolean "on_duty",        default: false
-    t.boolean "on_response",    default: false
+    t.integer "emergency_id"
   end
 
 end
