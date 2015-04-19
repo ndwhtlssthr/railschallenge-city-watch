@@ -107,7 +107,7 @@ There are two components to scoring: automated scoring, and judge scoring.
 There are two components to the automated scoring: the test suite, and
 [rubocop][1].
 
-  * The test suite contains 51 tests, which contain **114 assertions**. For
+  * The test suite contains 50 tests, which contain **114 assertions**. For
     every assertion that passes, you will receive 1 point (for a maximum of 114
     points). **NOTE**: you only get points for the tests that come with this
     repository. You're free to add more tests as you develop at your
@@ -121,7 +121,7 @@ points) for a total score of ***111 points***. See if you can beat that on the
 automated scoring side!
 
 The [mailing list][3] the senior developer referenced is a real mailing list.
-When you run into questions or want clarification on portion of the challenge,
+When you run into questions or want clarification on a portion of the challenge,
 feel free to email there first. Someone from the **rails**challenge team will
 respond, acting as the (hopefully helpful) senior engineer in the scenario.
 
