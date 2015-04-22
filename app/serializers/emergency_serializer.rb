@@ -7,6 +7,6 @@ class EmergencySerializer < ActiveModel::Serializer
   end
 
   def include_full_response?
-    object.full_response == true
+    object.full_response
   end
 end

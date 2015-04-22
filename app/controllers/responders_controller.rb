@@ -1,7 +1,7 @@
 class RespondersController < ApplicationController
   def index
     if params[:show] == 'capacity'
-      render json: CapacityReport.output
+      render json: CapacityReport.to_json
     else
       render json: Responder.all
     end
@@ -10,7 +10,7 @@ class RespondersController < ApplicationController
   def show
     @responder = Responder.find_by(name: params[:id])
     if @responder
-      render json: @responder, status: 201
+      render json: @responder
     else
       render_not_found
     end
@@ -19,16 +19,16 @@ class RespondersController < ApplicationController
   def create
     @responder = Responder.new(responder_create_params)
     if @responder.save
-      render json: @responder, status: 201
+      render json: @responder, status: :created
     else
-      render json: { message: @responder.errors.messages }, status: 422
+      render json: { message: @responder.errors.messages }, status: :unprocessable_entity
     end
   end
 
   def update
     @responder = Responder.find_by(name: params[:id])
     @responder.update_attributes(responder_update_params)
-    render json: @responder, status: 201
+    render json: @responder, status: :created
   end
 
   private

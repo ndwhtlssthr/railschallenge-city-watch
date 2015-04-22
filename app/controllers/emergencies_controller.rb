@@ -8,7 +8,7 @@ class EmergenciesController < ApplicationController
   def show
     @emergency = Emergency.find_by(code: params[:id])
     if @emergency
-      render json: @emergency, status: 201
+      render json: @emergency
     else
       render_not_found
     end
@@ -18,17 +18,17 @@ class EmergenciesController < ApplicationController
     @emergency = Emergency.new(emergency_create_params)
     if @emergency.save
       Dispatcher.new(@emergency).dispatch_units
-      render json: @emergency, status: 201
+      render json: @emergency, status: :created
     else
-      render json: { message: @emergency.errors.messages }, status: 422
+      render json: { message: @emergency.errors.messages }, status: :unprocessable_entity
     end
   end
 
   def update
     @emergency = Emergency.find_by(code: params[:id])
     @emergency.update_attributes(emergency_update_params)
-    Dispatcher.new(@emergency).resolve_emergency if @emergency.resolved_at
-    render json: @emergency, status: 201
+    Dispatcher.new(@emergency).resolve_emergency if @emergency.resolved?
+    render json: @emergency, status: :created
   end
 
   private

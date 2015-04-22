@@ -5,6 +5,8 @@ class Dispatcher
     @emergency = emergency
   end
 
+  # Loop through each emergency branch (fire, medical, etc.) and assign responers.
+  # If all need met, mark the emergency as fully responded to.
   def dispatch_units
     force_branches.each do |type, type_severity|
       select_units(type, type_severity)
@@ -12,14 +14,20 @@ class Dispatcher
     mark_full_response if full_response?
   end
 
+  # Remove all assigned responders from the emergency.
   def resolve_emergency
-    emergency.responders.each do |responder|
-      unassign(responder)
-    end
+    emergency.responders = []
   end
 
   private
 
+  # select_units is looped through for each branch
+  # severity for the given type is determined as is the full 'force' available
+  # If the severity need for that force is 0, or there are no available units, return
+  # Otherwise, loop through the available_force (sorted by capacity high to low)
+  # and assign them to the emergency if there is need remaining
+  # After looping, if there is remaining need (but no units of that size, as shown
+  # by breaking out of the loop) assign the smallest unit available
   def select_units(type, type_severity)
     severity = emergency.send(type_severity)
     force = Responder.available_units(type)
@@ -29,7 +37,7 @@ class Dispatcher
         break
       elsif unit.capacity <= severity
         severity -= unit.capacity
-        assign_to_emergency(unit)
+        assign_unit(unit)
       end
     end
     assign_smallest_unit(force) if remaining_need?(severity)
@@ -51,16 +59,12 @@ class Dispatcher
     severity > 0
   end
 
+  def assign_unit(unit)
+    emergency.responders << unit
+  end
+
   def assign_smallest_unit(force)
-    assign_to_emergency(force.last)
-  end
-
-  def assign_to_emergency(unit)
-    unit.update_attribute(:emergency_id, emergency.id)
-  end
-
-  def unassign(unit)
-    unit.update_attribute(:emergency_id, nil)
+    emergency.responders << force.last
   end
 
   def force_branches

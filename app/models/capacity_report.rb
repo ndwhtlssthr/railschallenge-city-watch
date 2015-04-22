@@ -1,5 +1,5 @@
 class CapacityReport
-  def self.output
+  def self.to_json
     {
       'capacity': {
         'Fire': capacity('Fire'),
