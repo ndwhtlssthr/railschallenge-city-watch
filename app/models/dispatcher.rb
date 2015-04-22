@@ -13,9 +13,7 @@ class Dispatcher
   end
 
   def resolve_emergency
-    emergency.responders.each do |responder|
-      unassign(responder)
-    end
+    emergency.responders = []
   end
 
   private
@@ -29,7 +27,7 @@ class Dispatcher
         break
       elsif unit.capacity <= severity
         severity -= unit.capacity
-        assign_to_emergency(unit)
+        assign_unit(unit)
       end
     end
     assign_smallest_unit(force) if remaining_need?(severity)
@@ -51,16 +49,12 @@ class Dispatcher
     severity > 0
   end
 
+  def assign_unit(unit)
+    emergency.responders << unit
+  end
+
   def assign_smallest_unit(force)
-    assign_to_emergency(force.last)
-  end
-
-  def assign_to_emergency(unit)
-    unit.update_attribute(:emergency_id, emergency.id)
-  end
-
-  def unassign(unit)
-    unit.update_attribute(:emergency_id, nil)
+    emergency.responders << force.last
   end
 
   def force_branches
