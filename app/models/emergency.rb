@@ -11,6 +11,10 @@ class Emergency < ActiveRecord::Base
     where(full_response: true).count
   end
 
+  def resolved?
+    resolved_at ? true : false
+  end
+
   def total_response_need
     fire_severity + police_severity + medical_severity
   end
