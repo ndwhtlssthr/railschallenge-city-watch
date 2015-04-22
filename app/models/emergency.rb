@@ -7,9 +7,7 @@ class Emergency < ActiveRecord::Base
 
   has_many :responders, foreign_key: :emergency_code, primary_key: :code
 
-  def self.full_response_count
-    where(full_response: true).count
-  end
+  scope :full_response_count, -> { where(full_response: true).count }
 
   def resolved?
     resolved_at ? true : false
