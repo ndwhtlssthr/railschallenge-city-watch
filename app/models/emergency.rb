@@ -16,8 +16,4 @@ class Emergency < ActiveRecord::Base
   def total_response_need
     fire_severity + police_severity + medical_severity
   end
-
-  def total_response
-    responders.sum(:capacity)
-  end
 end
